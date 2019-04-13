@@ -47,7 +47,7 @@ class App extends Component {
       zipCode,
       filteredBuildingPermits: this.filterBuildingPermits(
         prevState.buildingPermits,
-        { zipCode, type: prevState.type }
+        { zipCode, type: 'all' }
       )
     }));
   };
