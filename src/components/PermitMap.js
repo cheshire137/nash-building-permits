@@ -12,17 +12,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-const hasCoordinates = function(buildingPermit) {
-  return buildingPermit.position;
+const hasCoordinates = function(permit) {
+  return permit.position;
 };
 
 const getCenterPosition = function(buildingPermits) {
   let lat = 0;
   let lng = 0;
 
-  for (const buildingPermit of buildingPermits) {
-    lng = lng + buildingPermit.longitude;
-    lat = lat + buildingPermit.latitude;
+  for (const permit of buildingPermits) {
+    lng = lng + permit.longitude;
+    lat = lat + permit.latitude;
   }
 
   lat = lat / buildingPermits.length;
@@ -43,6 +43,12 @@ class PermitMap extends Component {
     }
 
     const center = getCenterPosition(geocodedPermits);
+    let bounds = geocodedPermits.map(permit => permit.position);
+    let zoom = null;
+    if (bounds.length < 2) {
+      bounds = null;
+      zoom = 13;
+    }
 
     return (
       <div className="map">
@@ -50,7 +56,8 @@ class PermitMap extends Component {
           id="permit-map"
           center={center}
           className="map__reactleaflet"
-          bounds={geocodedPermits.map(permit => permit.position)}
+          bounds={bounds}
+          zoom={zoom}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

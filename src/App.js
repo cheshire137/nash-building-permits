@@ -13,10 +13,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buildingPermits: [],
       isLoading: true,
-      zipCode: LocalStorage.get(zipCodeKey) || 'all',
+      buildingPermits: [],
       filteredBuildingPermits: [],
+      zipCode: LocalStorage.get(zipCodeKey) || 'all',
       type: LocalStorage.get(typeKey) || 'all'
     };
   }
@@ -30,24 +30,25 @@ class App extends Component {
     this.setState(prevState => ({
       buildingPermits,
       isLoading: false,
-      filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, prevState.zipCode,
-                                                          prevState.type)
+      filteredBuildingPermits: this.filterBuildingPermits(
+        buildingPermits,
+        { zipCode: prevState.zipCode, type: prevState.type }
+      )
     }));
   };
 
-  filterBuildingPermits = (buildingPermits, zipCode, type) => {
-    return buildingPermits.filter(permit => {
-      return (permit.zipCode === zipCode || zipCode === 'all') &&
-             (permit.type === type || type === 'all');
-    });
+  filterBuildingPermits = (buildingPermits, criteria) => {
+    return buildingPermits.filter(permit => permit.matches(criteria));
   };
 
   onZipCodeChange = zipCode => {
     LocalStorage.set(zipCodeKey, zipCode);
     this.setState(prevState => ({
       zipCode,
-      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits,
-                                                          zipCode, prevState.type)
+      filteredBuildingPermits: this.filterBuildingPermits(
+        prevState.buildingPermits,
+        { zipCode, type: prevState.type }
+      )
     }));
   };
 
@@ -55,13 +56,16 @@ class App extends Component {
     LocalStorage.set(typeKey, type);
     this.setState(prevState => ({
       type,
-      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits,
-                                                          prevState.zipCode, type)
+      filteredBuildingPermits: this.filterBuildingPermits(
+        prevState.buildingPermits,
+        { zipCode: prevState.zipCode, type }
+      )
     }));
   };
 
   render() {
-    const { buildingPermits, isLoading, zipCode, filteredBuildingPermits } = this.state;
+    const { buildingPermits, isLoading, zipCode,
+            filteredBuildingPermits } = this.state;
 
     return (
       <div>

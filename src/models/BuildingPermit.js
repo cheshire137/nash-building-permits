@@ -19,6 +19,19 @@ class BuildingPermit {
     this.purpose = data.purpose;
     this.key = `${this.permit}${this.address}${this.type}`;
   }
+
+  matches(criteria) {
+    const { zipCode, type } = criteria;
+    return this.matchesZipCode(zipCode) && this.matchesType(type);
+  }
+
+  matchesType(type) {
+    return this.type === type || type === 'all';
+  }
+
+  matchesZipCode(zipCode) {
+    return this.zipCode === zipCode || zipCode === 'all';
+  }
 }
 
 export default BuildingPermit;
