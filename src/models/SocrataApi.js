@@ -18,7 +18,7 @@ class SocrataApi {
     return `${this.baseUrl}${query || ''}`;
   }
 
-  async get(query) {
+  async get(query, jsonFormatter) {
     const url = this.urlFor(query);
     const cachedUrls = LocalStorage.get(cachedUrlsKey) || {};
     const cachedResponses = LocalStorage.get(cachedResponsesKey) || {};
@@ -41,11 +41,11 @@ class SocrataApi {
       }
     })
     const json = await response.json();
-    cachedResponses[url] = json;
+    cachedResponses[url] = jsonFormatter(json);
     cachedUrls[url] = today;
     LocalStorage.set(cachedUrlsKey, cachedUrls);
     LocalStorage.set(cachedResponsesKey, cachedResponses);
-    return json;
+    return cachedResponses[url];
   }
 }
 

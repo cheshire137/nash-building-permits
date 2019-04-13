@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const hasCoordinates = function(permit) {
-  return permit.position;
+  return permit.position();
 };
 
 const getCenterPosition = function(buildingPermits) {
@@ -45,7 +45,7 @@ class PermitMap extends Component {
     }
 
     const center = getCenterPosition(geocodedPermits);
-    let bounds = geocodedPermits.map(permit => permit.position);
+    let bounds = geocodedPermits.map(permit => permit.position());
     let zoom = null;
     if (bounds.length < 2) {
       bounds = null;
@@ -66,9 +66,13 @@ class PermitMap extends Component {
         />
         {geocodedPermits.map(permit => (
           <Marker
-            key={permit.key}
-            position={permit.position}
-            icon={L.AwesomeMarkers.icon(permit.iconConfig)}
+            key={permit.key()}
+            position={permit.position()}
+            icon={L.AwesomeMarkers.icon({
+              icon: permit.icon(),
+              markerColor: permit.markerColor(),
+              prefix: 'ion'
+            })}
           >
             <Popup>{permit.purpose}</Popup>
             <Tooltip>{permit.subtype}</Tooltip>
