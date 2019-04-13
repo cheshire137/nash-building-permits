@@ -35,7 +35,7 @@ class PermitMap extends Component {
   render() {
     const { data } = this.props;
     if (data.length < 1) {
-      return null;
+      return <p>No building permits in the selected area.</p>;
     }
 
     const position = getCenterPosition(data);
