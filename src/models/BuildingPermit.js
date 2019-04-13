@@ -56,13 +56,21 @@ class BuildingPermit {
     return categoryIcons[this.category()];
   }
 
+  year() {
+    return this.dateIssued.getFullYear();
+  }
+
   markerColor() {
     return categoryMarkerColors[this.category()];
   }
 
   matches(criteria) {
-    const { zipCode, type } = criteria;
-    return this.matchesZipCode(zipCode) && this.matchesType(type);
+    const { zipCode, type, year } = criteria;
+    return this.matchesZipCode(zipCode) && this.matchesType(type) && this.matchesYear(year);
+  }
+
+  matchesYear(year) {
+    return (year && this.year().toString() === year) || year === 'all';
   }
 
   matchesType(type) {

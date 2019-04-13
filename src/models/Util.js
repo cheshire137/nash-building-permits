@@ -1,10 +1,15 @@
 class Util {
   static uniq(list) {
     const hash = {};
+    const keyFor = item => item.toString();
+    const originalItems = {};
     for (const item of list) {
-      hash[item] = 1;
+      const key = keyFor(item);
+      originalItems[key] = item;
+      hash[key] = 1;
     }
-    return Object.keys(hash);
+    const keysToKeep = Object.keys(hash);
+    return keysToKeep.map(key => originalItems[key]);
   }
 }
 

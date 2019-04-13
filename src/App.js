@@ -8,6 +8,7 @@ import './App.css';
 
 const zipCodeKey = 'zip-code';
 const typeKey = 'type';
+const yearKey = 'year';
 
 class App extends Component {
   constructor(props) {
@@ -30,16 +31,20 @@ class App extends Component {
     if (zipCodes.length > 0) {
       firstZipCode = zipCodes[0];
     }
+
     this.setState(prevState => {
       const zipCode = LocalStorage.get(zipCodeKey) || prevState.zipCode || firstZipCode;
       const type = LocalStorage.get(typeKey) || prevState.type || 'all';
+      const year = LocalStorage.get(yearKey) || prevState.year || 'all';
 
       return {
         buildingPermits,
         isLoading: false,
         zipCode,
         type,
-        filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, { zipCode, type })
+        year,
+        filteredBuildingPermits: this.filterBuildingPermits(buildingPermits,
+                                                            { zipCode, type, year })
       }
     });
   };
@@ -71,8 +76,19 @@ class App extends Component {
     }));
   };
 
+  onYearChange = year => {
+    LocalStorage.set(yearKey, year);
+    this.setState(prevState => ({
+      year,
+      filteredBuildingPermits: this.filterBuildingPermits(
+        prevState.buildingPermits,
+        { zipCode: prevState.zipCode, year, type: prevState.type }
+      )
+    }));
+  };
+
   render() {
-    const { buildingPermits, isLoading, zipCode, type,
+    const { buildingPermits, isLoading, zipCode, type, year,
             filteredBuildingPermits } = this.state;
 
     return (
@@ -87,6 +103,8 @@ class App extends Component {
                 buildingPermits={buildingPermits}
                 zipCode={zipCode}
                 type={type}
+                year={year}
+                onYearChange={this.onYearChange}
                 onZipCodeChange={this.onZipCodeChange}
                 onTypeChange={this.onTypeChange}
               />

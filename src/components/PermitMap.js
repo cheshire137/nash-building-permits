@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
+import Util from '../models/Util';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css';
 import './PermitMap.css';
@@ -20,11 +21,12 @@ const hasCoordinates = function(permit) {
 
 const getBoundsAndZoom = function(buildingPermits) {
   const geocodes = buildingPermits.map(permit => permit.position());
+  const defaultZoom = 13;
   let bounds = null;
   let zoom = null;
 
   if (geocodes.length < 2) {
-    zoom = 13;
+    zoom = defaultZoom;
   } else {
     let minLatGeocode = geocodes[0];
     let minLngGeocode = geocodes[0];
@@ -48,6 +50,13 @@ const getBoundsAndZoom = function(buildingPermits) {
 
     bounds = [minLatGeocode, minLngGeocode, maxLatGeocode, maxLngGeocode];
   }
+
+  bounds = Util.uniq(bounds);
+  if (bounds.length < 2) {
+    bounds = null;
+    zoom = defaultZoom;
+  }
+  console.log(bounds, zoom)
 
   return { bounds, zoom };
 };

@@ -58,7 +58,7 @@ class TypeSelect extends Component {
     const typesByCategory = getTypesByCategory(types, categories);
 
     return (
-      <div>
+      <div className="mr-4">
         <label
           htmlFor="type"
           className="mr-1"

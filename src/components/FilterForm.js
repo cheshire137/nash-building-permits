@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import ZipCodeSelect from './ZipCodeSelect';
 import TypeSelect from './TypeSelect';
+import YearSelect from './YearSelect';
 
 class FilterForm extends Component {
   render() {
     const { buildingPermits, onZipCodeChange, zipCode,
-            onTypeChange, type } = this.props;
+            onTypeChange, type, onYearChange, year } = this.props;
     const allZipCodes = buildingPermits.map(permit => permit.zipCode);
-    const allTypes = buildingPermits.filter(permit => permit.matchesZipCode(zipCode))
-                                    .map(permit => permit.type);
+    const permitsInZip = buildingPermits.filter(permit => permit.matchesZipCode(zipCode));
+    const allTypes = permitsInZip.map(permit => permit.type);
+    const allYears = permitsInZip.map(permit => permit.year());
 
     return (
       <form
@@ -23,6 +25,11 @@ class FilterForm extends Component {
           onChange={onTypeChange}
           selectedType={type}
           allTypes={allTypes}
+        />
+        <YearSelect
+          onChange={onYearChange}
+          selectedYear={year}
+          allYears={allYears}
         />
       </form>
     );
