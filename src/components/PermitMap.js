@@ -18,6 +18,40 @@ const hasCoordinates = function(permit) {
   return permit.position();
 };
 
+const getBoundsAndZoom = function(buildingPermits) {
+  const geocodes = buildingPermits.map(permit => permit.position());
+  let bounds = null;
+  let zoom = null;
+
+  if (geocodes.length < 2) {
+    zoom = 13;
+  } else {
+    let minLatGeocode = geocodes[0];
+    let minLngGeocode = geocodes[0];
+    let maxLatGeocode = geocodes[0];
+    let maxLngGeocode = geocodes[0];
+
+    for (const geocode of geocodes) {
+      if (geocode[0] < minLatGeocode[0]) {
+        minLatGeocode = geocode;
+      }
+      if (geocode[0] > maxLatGeocode[0]) {
+        maxLatGeocode = geocode;
+      }
+      if (geocode[1] < minLngGeocode[1]) {
+        minLngGeocode = geocode;
+      }
+      if (geocode[1] > maxLngGeocode[1]) {
+        maxLngGeocode = geocode;
+      }
+    }
+
+    bounds = [minLatGeocode, minLngGeocode, maxLatGeocode, maxLngGeocode];
+  }
+
+  return { bounds, zoom };
+};
+
 const getCenterPosition = function(buildingPermits) {
   let lat = 0;
   let lng = 0;
@@ -45,12 +79,7 @@ class PermitMap extends Component {
     }
 
     const center = getCenterPosition(geocodedPermits);
-    let bounds = geocodedPermits.map(permit => permit.position());
-    let zoom = null;
-    if (bounds.length < 2) {
-      bounds = null;
-      zoom = 13;
-    }
+    const { bounds, zoom } = getBoundsAndZoom(geocodedPermits);
 
     return (
       <Map
