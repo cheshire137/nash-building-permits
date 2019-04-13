@@ -12,24 +12,21 @@ const displayName = function(type) {
 
 const getCategories = function(types) {
   let categories = [];
-  let subcategories = [];
 
   for (const type of types) {
     if (type.indexOf(categorySeparator) > -1) {
-      const [ category, subcategory ] = type.split(categorySeparator);
+      const category = type.split(categorySeparator)[0];
       categories.push(category);
-      subcategories.push(subcategory);
     }
   }
 
   categories = Util.uniq(categories.sort());
-  subcategories = Util.uniq(subcategories.sort());
 
   if (categories.length < types.length) {
     categories.push('Other');
   }
 
-  return { categories, subcategories };
+  return categories;
 };
 
 const getTypesForCategory = function(types, category) {
@@ -57,7 +54,7 @@ class TypeSelect extends Component {
   render() {
     const { allTypes, selectedType } = this.props;
     const types = Util.uniq(allTypes.sort());
-    const { categories, subcategories } = getCategories(types);
+    const categories = getCategories(types);
     const typesByCategory = getTypesByCategory(types, categories);
     console.log(typesByCategory)
 
