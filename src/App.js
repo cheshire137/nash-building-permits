@@ -3,7 +3,10 @@ import BuildingPermitsIssuedApi from './models/BuildingPermitsIssuedApi';
 import Config from './config.json';
 import FilterForm from './components/FilterForm';
 import PermitMap from './components/PermitMap';
+import LocalStorage from './models/LocalStorage';
 import './App.css';
+
+const zipCodeKey = 'zip-code';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +14,7 @@ class App extends Component {
     this.state = {
       data: [],
       isLoading: true,
-      zipCode: '',
+      zipCode: LocalStorage.get(zipCodeKey) || '',
       filteredData: []
     };
   }
@@ -34,6 +37,7 @@ class App extends Component {
   };
 
   onZipCodeChange = zipCode => {
+    LocalStorage.set(zipCodeKey, zipCode);
     this.setState(prevState => ({
       zipCode,
       filteredData: this.filterData(prevState.data, zipCode)
