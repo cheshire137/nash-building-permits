@@ -16,8 +16,6 @@ class App extends Component {
       isLoading: true,
       buildingPermits: [],
       filteredBuildingPermits: [],
-      zipCode: LocalStorage.get(zipCodeKey) || 'all',
-      type: LocalStorage.get(typeKey) || 'all'
     };
   }
 
@@ -32,16 +30,18 @@ class App extends Component {
     if (zipCodes.length > 0) {
       firstZipCode = zipCodes[0];
     }
-    this.setState(prevState => ({
-      buildingPermits,
-      isLoading: false,
-      zipCode: firstZipCode || prevState.zipCode,
-      type: 'all',
-      filteredBuildingPermits: this.filterBuildingPermits(
+    this.setState(prevState => {
+      const zipCode = LocalStorage.get(zipCodeKey) || prevState.zipCode || firstZipCode;
+      const type = LocalStorage.get(typeKey) || prevState.type || 'all';
+
+      return {
         buildingPermits,
-        { zipCode: firstZipCode || prevState.zipCode, type: 'all' }
-      )
-    }));
+        isLoading: false,
+        zipCode,
+        type,
+        filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, { zipCode, type })
+      }
+    });
   };
 
   filterBuildingPermits = (buildingPermits, criteria) => {

@@ -103,7 +103,12 @@ class PermitMap extends Component {
               prefix: 'ion'
             })}
           >
-            <Popup>{permit.purpose}</Popup>
+            <Popup>
+              <div className="mb-1">
+                {permit.dateIssued.toLocaleDateString()}
+              </div>
+              <div className="popup-long-description">{permit.purpose}</div>
+            </Popup>
             <Tooltip>{permit.subtype}</Tooltip>
           </Marker>
         ))}

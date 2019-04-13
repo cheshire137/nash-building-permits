@@ -3,7 +3,7 @@
   height: 100%;
 }
 
-.leaflet-popup-content {
+.popup-long-description {
   overflow: auto;
   max-height: 9.3em;
 }
