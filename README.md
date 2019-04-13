@@ -2,7 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## How to develop
+
+Sign up for a [Socrata API app token](https://data.nashville.gov/profile/app_tokens) for Nashville data.
+
+```bash
+cp src/config.json.example src/config.json
+```
+
+Customize config.json with your Socrata API app token.
 
 In the project directory, you can run:
 

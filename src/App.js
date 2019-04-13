@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
+import BuildingPermitsIssuedApi from './models/BuildingPermitsIssuedApi';
+import Config from './config.json';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [] };
+  }
+
+  componentDidMount() {
+    const api = new BuildingPermitsIssuedApi(Config.socrataApi.appToken);
+    api.get().then(data => console.log(data));
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <div>
+        <header>
+          <div className="container my-3">
+            <h1
+              className="f3 text-normal"
+            >Nashville Building Permits</h1>
+          </div>
         </header>
+        <main>
+        </main>
       </div>
     );
   }
