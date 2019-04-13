@@ -12,18 +12,36 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
+const getCenterPosition = function(data) {
+  let lat = 0;
+  let lng = 0;
+  let count = 0;
+
+  for (const row of data) {
+    if (row.mapped_location && row.mapped_location.coordinates) {
+      lat = lat + row.mapped_location.coordinates[1];
+      lng = lng + row.mapped_location.coordinates[0];
+      count++;
+    }
+  }
+
+  lat = lat / count;
+  lng = lng / count;
+
+  return [lat, lng];
+};
+
 class PermitMap extends Component {
   render() {
     const { data } = this.props;
-    const firstRow = data[0];
-    if (!firstRow) {
-      return null;
-    }
-    if (!firstRow.mapped_location || !firstRow.mapped_location.coordinates) {
+    if (data.length < 1) {
       return null;
     }
 
-    const position = firstRow.mapped_location.coordinates.reverse();
+    const position = getCenterPosition(data);
+    if (position[0] === 0 && position[1] === 0) {
+      return null;
+    }
 
     return (
       <div className="map">
