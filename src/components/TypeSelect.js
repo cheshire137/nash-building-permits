@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import Util from '../models/Util';
 
-class ZipCodeSelect extends Component {
+class TypeSelect extends Component {
   onChange = event => {
     this.props.onChange(event.target.value);
   };
 
   render() {
-    const { allZipCodes, selectedZipCode } = this.props;
-    const zipCodes = Util.uniq(allZipCodes.sort());
+    const { allTypes, selectedType } = this.props;
+    const types = Util.uniq(allTypes.sort());
 
     return (
       <div>
         <label
-          htmlFor="zip"
+          htmlFor="type"
           className="mr-1"
-        >Zip code:</label>
+        >Permit type:</label>
         <select
-          id="zip"
-          className="form-select mr-4"
+          id="type"
+          className="form-select"
           onChange={this.onChange}
-          value={selectedZipCode}
+          value={selectedType}
         >
           <option value="all">All</option>
-          {zipCodes.map(zipCode => (
+          {types.map(zipCode => (
             <option value={zipCode} key={zipCode}>{zipCode}</option>
           ))}
         </select>
@@ -32,4 +32,4 @@ class ZipCodeSelect extends Component {
   }
 }
 
-export default ZipCodeSelect;
+export default TypeSelect;

@@ -7,6 +7,7 @@ import LocalStorage from './models/LocalStorage';
 import './App.css';
 
 const zipCodeKey = 'zip-code';
+const typeKey = 'type';
 
 class App extends Component {
   constructor(props) {
@@ -14,8 +15,9 @@ class App extends Component {
     this.state = {
       buildingPermits: [],
       isLoading: true,
-      zipCode: LocalStorage.get(zipCodeKey) || '',
-      filteredBuildingPermits: []
+      zipCode: LocalStorage.get(zipCodeKey) || 'all',
+      filteredBuildingPermits: [],
+      type: LocalStorage.get(typeKey) || 'all'
     };
   }
 
@@ -28,20 +30,33 @@ class App extends Component {
     this.setState(prevState => ({
       buildingPermits,
       isLoading: false,
-      filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, prevState.zipCode)
+      filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, prevState.zipCode,
+                                                          prevState.type)
     }));
   };
 
-  filterBuildingPermits = (buildingPermits, zipCode) => {
-    return buildingPermits.filter(buildingPermit =>
-      buildingPermit.zipCode === zipCode);
+  filterBuildingPermits = (buildingPermits, zipCode, type) => {
+    return buildingPermits.filter(permit => {
+      return (permit.zipCode === zipCode || zipCode === 'all') &&
+             (permit.type === type || type === 'all');
+    });
   };
 
   onZipCodeChange = zipCode => {
     LocalStorage.set(zipCodeKey, zipCode);
     this.setState(prevState => ({
       zipCode,
-      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits, zipCode)
+      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits,
+                                                          zipCode, prevState.type)
+    }));
+  };
+
+  onTypeChange = type => {
+    LocalStorage.set(typeKey, type);
+    this.setState(prevState => ({
+      type,
+      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits,
+                                                          prevState.zipCode, type)
     }));
   };
 
@@ -69,6 +84,7 @@ class App extends Component {
                   buildingPermits={buildingPermits}
                   zipCode={zipCode}
                   onZipCodeChange={this.onZipCodeChange}
+                  onTypeChange={this.onTypeChange}
                 />
                 <PermitMap
                   buildingPermits={filteredBuildingPermits}
