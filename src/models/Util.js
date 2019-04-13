@@ -1,5 +1,8 @@
 class Util {
   static uniq(list) {
+    if (!list) {
+      return list;
+    }
     const hash = {};
     const keyFor = item => item.toString();
     const originalItems = {};

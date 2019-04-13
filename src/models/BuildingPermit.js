@@ -76,7 +76,7 @@ class BuildingPermit {
   matchesType(type) {
     if (type.indexOf('all-') === 0) {
       const category = type.split('all-')[1];
-      return this.category === category;
+      return this.category() === category;
     }
     return this.type === type || type === 'all';
   }

@@ -58,9 +58,10 @@ class App extends Component {
     this.setState(prevState => ({
       zipCode,
       type: 'all',
+      year: 'all',
       filteredBuildingPermits: this.filterBuildingPermits(
         prevState.buildingPermits,
-        { zipCode, type: 'all' }
+        { zipCode, type: 'all', year: 'all' }
       )
     }));
   };
@@ -69,9 +70,10 @@ class App extends Component {
     LocalStorage.set(typeKey, type);
     this.setState(prevState => ({
       type,
+      year: 'all',
       filteredBuildingPermits: this.filterBuildingPermits(
         prevState.buildingPermits,
-        { zipCode: prevState.zipCode, type }
+        { zipCode: prevState.zipCode, type, year: 'all' }
       )
     }));
   };

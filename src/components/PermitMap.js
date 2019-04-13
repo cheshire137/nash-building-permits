@@ -52,11 +52,10 @@ const getBoundsAndZoom = function(buildingPermits) {
   }
 
   bounds = Util.uniq(bounds);
-  if (bounds.length < 2) {
+  if (!bounds || bounds.length < 2) {
     bounds = null;
     zoom = defaultZoom;
   }
-  console.log(bounds, zoom)
 
   return { bounds, zoom };
 };
