@@ -27,12 +27,19 @@ class App extends Component {
   }
 
   onDataLoaded = buildingPermits => {
+    const zipCodes = buildingPermits.filter(permit => permit.zipCode).map(permit => permit.zipCode).sort();
+    let firstZipCode = null;
+    if (zipCodes.length > 0) {
+      firstZipCode = zipCodes[0];
+    }
     this.setState(prevState => ({
       buildingPermits,
       isLoading: false,
+      zipCode: firstZipCode || prevState.zipCode,
+      type: 'all',
       filteredBuildingPermits: this.filterBuildingPermits(
         buildingPermits,
-        { zipCode: prevState.zipCode, type: prevState.type }
+        { zipCode: firstZipCode || prevState.zipCode, type: 'all' }
       )
     }));
   };
@@ -45,6 +52,7 @@ class App extends Component {
     LocalStorage.set(zipCodeKey, zipCode);
     this.setState(prevState => ({
       zipCode,
+      type: 'all',
       filteredBuildingPermits: this.filterBuildingPermits(
         prevState.buildingPermits,
         { zipCode, type: 'all' }
