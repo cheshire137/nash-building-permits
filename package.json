@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "leaflet": "^1.4.0",
+    "leaflet.awesome-markers": "^2.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-leaflet": "^2.2.1",
