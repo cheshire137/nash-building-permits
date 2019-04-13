@@ -64,7 +64,7 @@ class App extends Component {
   };
 
   render() {
-    const { buildingPermits, isLoading, zipCode,
+    const { buildingPermits, isLoading, zipCode, type,
             filteredBuildingPermits } = this.state;
 
     return (
@@ -87,6 +87,7 @@ class App extends Component {
                 <FilterForm
                   buildingPermits={buildingPermits}
                   zipCode={zipCode}
+                  type={type}
                   onZipCodeChange={this.onZipCodeChange}
                   onTypeChange={this.onTypeChange}
                 />
