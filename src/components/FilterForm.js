@@ -7,7 +7,9 @@ class FilterForm extends Component {
     console.log(data[0]);
 
     return (
-      <form>
+      <form
+        className="mb-4"
+      >
         <label
           htmlFor="zip"
           className="mr-1"

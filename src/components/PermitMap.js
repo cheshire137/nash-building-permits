@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import './PermitMap.css';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -22,13 +23,12 @@ class PermitMap extends Component {
       return null;
     }
 
-    const position = firstRow.mapped_location.coordinates;
-    console.log(position);
+    const position = firstRow.mapped_location.coordinates.reverse();
 
     return (
       <div className="map">
         <Map
-          style={{height: '350px'}}
+          id="permit-map"
           center={position}
           className="map__reactleaflet"
           zoom="13"
