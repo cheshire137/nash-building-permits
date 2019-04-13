@@ -12,7 +12,7 @@ class FilterForm extends Component {
 
     return (
       <form
-        className="mb-4 d-flex flex-items-center"
+        className="flex-auto flex-justify-end d-flex flex-items-center"
       >
         <ZipCodeSelect
           onChange={onZipCodeChange}

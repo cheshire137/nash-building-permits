@@ -70,10 +70,19 @@ class App extends Component {
     return (
       <div>
         <header>
-          <div className="container my-3">
+          <div className="container my-3 d-flex flex-items-center flex-justify-between">
             <h1
               className="f3 text-normal"
             >Nashville Building Permits</h1>
+            {isLoading ? null : (
+              <FilterForm
+                buildingPermits={buildingPermits}
+                zipCode={zipCode}
+                type={type}
+                onZipCodeChange={this.onZipCodeChange}
+                onTypeChange={this.onTypeChange}
+              />
+            )}
           </div>
         </header>
         <main>
@@ -83,18 +92,9 @@ class App extends Component {
                 <h2>Loading...</h2>
               </div>
             ) : (
-              <div>
-                <FilterForm
-                  buildingPermits={buildingPermits}
-                  zipCode={zipCode}
-                  type={type}
-                  onZipCodeChange={this.onZipCodeChange}
-                  onTypeChange={this.onTypeChange}
-                />
-                <PermitMap
-                  buildingPermits={filteredBuildingPermits}
-                />
-              </div>
+              <PermitMap
+                buildingPermits={filteredBuildingPermits}
+              />
             )}
           </div>
         </main>
