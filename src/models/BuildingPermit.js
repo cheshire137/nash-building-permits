@@ -1,5 +1,17 @@
 import Util from './Util';
 
+const categoryIcons = {
+  Commercial: 'briefcase',
+  Residential: 'home',
+  Other: 'more'
+};
+
+const categoryMarkerColors = {
+  Commercial: 'green',
+  Residential: 'blue',
+  Other: 'orange'
+};
+
 class BuildingPermit {
   constructor(data) {
     this.type = (data.permit_type_description || '').replace(/^Building /i, '');
@@ -25,6 +37,11 @@ class BuildingPermit {
     this.subdivisionLot = data.subdivision_lot;
     this.purpose = data.purpose;
     this.key = `${this.permit}${this.address}${this.type}`;
+    this.iconConfig = {
+      icon: categoryIcons[this.category],
+      markerColor: categoryMarkerColors[this.category],
+      prefix: 'ion'
+    };
   }
 
   matches(criteria) {

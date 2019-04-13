@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css';
 import './PermitMap.css';
+import 'leaflet.awesome-markers/dist/leaflet.awesome-markers';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -62,13 +64,14 @@ class PermitMap extends Component {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {geocodedPermits.map(buildingPermit => (
+        {geocodedPermits.map(permit => (
           <Marker
-            key={buildingPermit.key}
-            position={buildingPermit.position}
+            key={permit.key}
+            position={permit.position}
+            icon={L.AwesomeMarkers.icon(permit.iconConfig)}
           >
-            <Popup>{buildingPermit.purpose}</Popup>
-            <Tooltip>{buildingPermit.subtype}</Tooltip>
+            <Popup>{permit.purpose}</Popup>
+            <Tooltip>{permit.subtype}</Tooltip>
           </Marker>
         ))}
       </Map>
