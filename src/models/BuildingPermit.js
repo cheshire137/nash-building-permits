@@ -17,6 +17,7 @@ class BuildingPermit {
     this.permit = data.permit;
     this.subdivisionLot = data.subdivision_lot;
     this.purpose = data.purpose;
+    this.key = `${this.permit}${this.address}${this.type}`;
   }
 }
 

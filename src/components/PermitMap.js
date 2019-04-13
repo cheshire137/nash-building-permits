@@ -58,11 +58,11 @@ class PermitMap extends Component {
           />
           {geocodedPermits.map(buildingPermit => (
             <Marker
-              key={buildingPermit.permit}
+              key={buildingPermit.key}
               position={buildingPermit.position}
             >
               <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                {buildingPermit.purpose}
               </Popup>
             </Marker>
           ))}
