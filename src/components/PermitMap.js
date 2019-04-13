@@ -50,7 +50,7 @@ class PermitMap extends Component {
           id="permit-map"
           center={center}
           className="map__reactleaflet"
-          zoom="13"
+          bounds={geocodedPermits.map(permit => permit.position)}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
