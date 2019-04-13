@@ -12,42 +12,43 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-const getCenterPosition = function(data) {
+const hasCoordinates = function(buildingPermit) {
+  return buildingPermit.position;
+};
+
+const getCenterPosition = function(buildingPermits) {
   let lat = 0;
   let lng = 0;
-  let count = 0;
 
-  for (const row of data) {
-    if (row.mapped_location && row.mapped_location.coordinates) {
-      lat = lat + row.mapped_location.coordinates[1];
-      lng = lng + row.mapped_location.coordinates[0];
-      count++;
-    }
+  for (const buildingPermit of buildingPermits) {
+    lng = lng + buildingPermit.longitude;
+    lat = lat + buildingPermit.latitude;
   }
 
-  lat = lat / count;
-  lng = lng / count;
+  lat = lat / buildingPermits.length;
+  lng = lng / buildingPermits.length;
 
   return [lat, lng];
 };
 
 class PermitMap extends Component {
   render() {
-    const { data } = this.props;
-    if (data.length < 1) {
-      return <p>No building permits in the selected area.</p>;
+    const { buildingPermits } = this.props;
+    const geocodedPermits = buildingPermits.filter(hasCoordinates);
+
+    if (geocodedPermits.length < 1) {
+      return (
+        <p>No building permits in the selected area.</p>
+      );
     }
 
-    const position = getCenterPosition(data);
-    if (position[0] === 0 && position[1] === 0) {
-      return null;
-    }
+    const center = getCenterPosition(geocodedPermits);
 
     return (
       <div className="map">
         <Map
           id="permit-map"
-          center={position}
+          center={center}
           className="map__reactleaflet"
           zoom="13"
         >
@@ -55,11 +56,16 @@ class PermitMap extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
+          {geocodedPermits.map(buildingPermit => (
+            <Marker
+              key={buildingPermit.permit}
+              position={buildingPermit.position}
+            >
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          ))}
         </Map>
       </div>
     );

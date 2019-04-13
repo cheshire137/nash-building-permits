@@ -1,4 +1,5 @@
 import SocrataApi from './SocrataApi';
+import BuildingPermit from './BuildingPermit';
 
 const apiUrl = 'https://data.nashville.gov/resource/p5r5-bnga.json';
 
@@ -7,6 +8,12 @@ const apiUrl = 'https://data.nashville.gov/resource/p5r5-bnga.json';
 class BuildingPermitsIssuedApi extends SocrataApi {
   constructor(appToken) {
     super(appToken, apiUrl);
+  }
+
+  async getBuildingPermits() {
+    const rows = await this.get();
+    console.log(rows[0]);
+    return rows.map(row => new BuildingPermit(row));
   }
 }
 

@@ -12,40 +12,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      buildingPermits: [],
       isLoading: true,
       zipCode: LocalStorage.get(zipCodeKey) || '',
-      filteredData: []
+      filteredBuildingPermits: []
     };
   }
 
   componentDidMount() {
     const api = new BuildingPermitsIssuedApi(Config.socrataApi.appToken);
-    api.get().then(this.onDataLoaded);
+    api.getBuildingPermits().then(this.onDataLoaded);
   }
 
-  onDataLoaded = data => {
+  onDataLoaded = buildingPermits => {
     this.setState(prevState => ({
-      data,
+      buildingPermits,
       isLoading: false,
-      filteredData: this.filterData(data, prevState.zipCode)
+      filteredBuildingPermits: this.filterBuildingPermits(buildingPermits, prevState.zipCode)
     }));
   };
 
-  filterData = (data, zipCode) => {
-    return data.filter(row => row.zip === zipCode);
+  filterBuildingPermits = (buildingPermits, zipCode) => {
+    return buildingPermits.filter(buildingPermit =>
+      buildingPermit.zipCode === zipCode);
   };
 
   onZipCodeChange = zipCode => {
     LocalStorage.set(zipCodeKey, zipCode);
     this.setState(prevState => ({
       zipCode,
-      filteredData: this.filterData(prevState.data, zipCode)
+      filteredBuildingPermits: this.filterBuildingPermits(prevState.buildingPermits, zipCode)
     }));
   };
 
   render() {
-    const { data, isLoading, zipCode, filteredData } = this.state;
+    const { buildingPermits, isLoading, zipCode, filteredBuildingPermits } = this.state;
 
     return (
       <div>
@@ -65,12 +66,12 @@ class App extends Component {
             ) : (
               <div>
                 <FilterForm
-                  data={data}
+                  buildingPermits={buildingPermits}
                   zipCode={zipCode}
                   onZipCodeChange={this.onZipCodeChange}
                 />
                 <PermitMap
-                  data={filteredData}
+                  buildingPermits={filteredBuildingPermits}
                 />
               </div>
             )}

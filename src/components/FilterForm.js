@@ -3,8 +3,9 @@ import ZipCodeSelect from './ZipCodeSelect';
 
 class FilterForm extends Component {
   render() {
-    const { data, onZipCodeChange, zipCode } = this.props;
-    console.log(data[0]);
+    const { buildingPermits, onZipCodeChange, zipCode } = this.props;
+    console.log(buildingPermits[0]);
+    const allZipCodes = buildingPermits.map(buildingPermit => buildingPermit.zipCode);
 
     return (
       <form
@@ -17,7 +18,7 @@ class FilterForm extends Component {
         <ZipCodeSelect
           onChange={onZipCodeChange}
           selectedZipCode={zipCode}
-          allZipCodes={data.map(row => row.zip)}
+          allZipCodes={allZipCodes}
         />
       </form>
     );
