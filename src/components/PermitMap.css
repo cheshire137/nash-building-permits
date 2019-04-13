@@ -1,5 +1,6 @@
 #permit-map {
-  height: 350px;
+  min-height: 350px;
+  height: 100%;
 }
 
 .leaflet-popup-content {

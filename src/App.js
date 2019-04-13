@@ -69,8 +69,8 @@ class App extends Component {
 
     return (
       <div>
-        <header>
-          <div className="container my-3 d-flex flex-items-center flex-justify-between">
+        <header className="site-header">
+          <div className="container py-3 d-flex flex-items-center flex-justify-between">
             <h1
               className="f3 text-normal"
             >Nashville Building Permits</h1>
@@ -85,7 +85,7 @@ class App extends Component {
             )}
           </div>
         </header>
-        <main>
+        <main className="site-main">
           <div className="container">
             {isLoading ? (
               <div className="blankslate">

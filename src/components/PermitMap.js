@@ -51,29 +51,27 @@ class PermitMap extends Component {
     }
 
     return (
-      <div className="map">
-        <Map
-          id="permit-map"
-          center={center}
-          className="map__reactleaflet"
-          bounds={bounds}
-          zoom={zoom}
-        >
-          <TileLayer
-            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {geocodedPermits.map(buildingPermit => (
-            <Marker
-              key={buildingPermit.key}
-              position={buildingPermit.position}
-            >
-              <Popup>{buildingPermit.purpose}</Popup>
-              <Tooltip>{buildingPermit.subtype}</Tooltip>
-            </Marker>
-          ))}
-        </Map>
-      </div>
+      <Map
+        id="permit-map"
+        center={center}
+        className="map__reactleaflet"
+        bounds={bounds}
+        zoom={zoom}
+      >
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {geocodedPermits.map(buildingPermit => (
+          <Marker
+            key={buildingPermit.key}
+            position={buildingPermit.position}
+          >
+            <Popup>{buildingPermit.purpose}</Popup>
+            <Tooltip>{buildingPermit.subtype}</Tooltip>
+          </Marker>
+        ))}
+      </Map>
     );
   }
 }
