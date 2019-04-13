@@ -3,11 +3,13 @@ import Util from '../models/Util';
 
 const categorySeparator = ' - ';
 
-const displayName = function(type) {
+const displayName = function(type, allTypes) {
+  const count = allTypes.filter(otherType => otherType === type).length;
   if (type.indexOf(categorySeparator) < 0) {
-    return type;
+    return `${type} (${count})`;
   }
-  return type.split(categorySeparator)[1];
+  const subcategory = type.split(categorySeparator)[1];
+  return `${subcategory} (${count})`;
 };
 
 const getCategories = function(types) {
@@ -56,7 +58,6 @@ class TypeSelect extends Component {
     const types = Util.uniq(allTypes.sort());
     const categories = getCategories(types);
     const typesByCategory = getTypesByCategory(types, categories);
-    console.log(typesByCategory)
 
     return (
       <div>
@@ -74,7 +75,7 @@ class TypeSelect extends Component {
           {categories.map(category => (
             <optgroup label={category} key={category}>
               {typesByCategory[category].map(type => (
-                <option value={type} key={type}>{displayName(type)}</option>
+                <option value={type} key={type}>{displayName(type, allTypes)}</option>
               ))}
             </optgroup>
           ))}

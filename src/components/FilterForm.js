@@ -6,9 +6,9 @@ class FilterForm extends Component {
   render() {
     const { buildingPermits, onZipCodeChange, zipCode,
             onTypeChange, type } = this.props;
-    console.log(buildingPermits[0]);
     const allZipCodes = buildingPermits.map(permit => permit.zipCode);
-    const allTypes = buildingPermits.map(permit => permit.type);
+    const allTypes = buildingPermits.filter(permit => permit.matchesZipCode(zipCode))
+                                    .map(permit => permit.type);
 
     return (
       <form
