@@ -1,6 +1,6 @@
 class BuildingPermit {
   constructor(data) {
-    this.type = data.permit_type_description;
+    this.type = (data.permit_type_description || '').replace(/^Building /i, '');
     this.subtype = data.permit_subtype_description;
     this.address = data.address || data.mapped_location_address;
     this.city = data.city || data.mapped_location_city;

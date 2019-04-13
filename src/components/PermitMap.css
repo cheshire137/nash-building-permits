@@ -1,3 +1,8 @@
 #permit-map {
   height: 350px;
 }
+
+.leaflet-popup-content {
+  overflow: auto;
+  max-height: 9.3em;
+}

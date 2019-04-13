@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './PermitMap.css';
@@ -61,9 +61,8 @@ class PermitMap extends Component {
               key={buildingPermit.key}
               position={buildingPermit.position}
             >
-              <Popup>
-                {buildingPermit.purpose}
-              </Popup>
+              <Popup>{buildingPermit.purpose}</Popup>
+              <Tooltip>{buildingPermit.subtype}</Tooltip>
             </Marker>
           ))}
         </Map>
