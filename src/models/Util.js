@@ -8,4 +8,6 @@ class Util {
   }
 }
 
+Util.categorySeparator = ' - ';
+
 export default Util;

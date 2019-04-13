@@ -1,6 +1,13 @@
+import Util from './Util';
+
 class BuildingPermit {
   constructor(data) {
     this.type = (data.permit_type_description || '').replace(/^Building /i, '');
+    if (this.type.indexOf(Util.categorySeparator) > -1) {
+      this.category = this.type.split(Util.categorySeparator)[0];
+    } else {
+      this.category = 'Other';
+    }
     this.subtype = data.permit_subtype_description;
     this.address = data.address || data.mapped_location_address;
     this.city = data.city || data.mapped_location_city;
@@ -26,6 +33,10 @@ class BuildingPermit {
   }
 
   matchesType(type) {
+    if (type.indexOf('all-') === 0) {
+      const category = type.split('all-')[1];
+      return this.category === category;
+    }
     return this.type === type || type === 'all';
   }
 

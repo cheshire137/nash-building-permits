@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Util from '../models/Util';
 
-const categorySeparator = ' - ';
-
 const displayName = function(type, allTypes) {
   const count = allTypes.filter(otherType => otherType === type).length;
-  if (type.indexOf(categorySeparator) < 0) {
+  if (type.indexOf(Util.categorySeparator) < 0) {
     return `${type} (${count})`;
   }
-  const subcategory = type.split(categorySeparator)[1];
+  const subcategory = type.split(Util.categorySeparator)[1];
   return `${subcategory} (${count})`;
 };
 
@@ -16,8 +14,8 @@ const getCategories = function(types) {
   let categories = [];
 
   for (const type of types) {
-    if (type.indexOf(categorySeparator) > -1) {
-      const category = type.split(categorySeparator)[0];
+    if (type.indexOf(Util.categorySeparator) > -1) {
+      const category = type.split(Util.categorySeparator)[0];
       categories.push(category);
     }
   }
@@ -33,7 +31,7 @@ const getCategories = function(types) {
 
 const getTypesForCategory = function(types, category) {
   return types.filter(type => {
-    if (type.indexOf(categorySeparator) < 0) {
+    if (type.indexOf(Util.categorySeparator) < 0) {
       return category === 'Other';
     }
     return type.indexOf(category) === 0
@@ -74,6 +72,7 @@ class TypeSelect extends Component {
           <option value="all">All</option>
           {categories.map(category => (
             <optgroup label={category} key={category}>
+              <option value={`all-${category}`}>All {category}</option>
               {typesByCategory[category].map(type => (
                 <option value={type} key={type}>{displayName(type, allTypes)}</option>
               ))}
