@@ -78,7 +78,8 @@ class PermitList extends Component {
             Cell: formatDateCell
           }
         ]}
-        defaultPageSize={3}
+        pageSize={3}
+        showPageSizeOptions={false}
         className="-striped -highlight permit-list"
       />
     );
