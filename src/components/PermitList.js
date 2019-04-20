@@ -3,10 +3,27 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import './PermitList.css';
 
+const formatDateCell = ({ value }) => {
+  if (value instanceof Date) {
+    const year = value.getFullYear();
+    let month = value.getMonth() + 1;
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    let day = value.getDate();
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    return <div className="text-center">{`${year}-${month}-${day}`}</div>;
+  }
+
+  return <div className="text-center">{value}</div>;
+};
+
 const formatLongText = ({ value }) => {
   return (
     <div
-      className="ws-normal constrained-text"
+      title={value}
     >{value}</div>
   );
 };
@@ -53,6 +70,12 @@ class PermitList extends Component {
             Header: 'Council district',
             accessor: 'councilDistrict',
             Cell: centerText
+          },
+          {
+            Header: 'Date issued',
+            accessor: 'dateIssued',
+            minWidth: 80,
+            Cell: formatDateCell
           }
         ]}
         defaultPageSize={3}
