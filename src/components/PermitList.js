@@ -3,6 +3,12 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import './PermitList.css';
 
+const renderIcon = row => {
+  const permit = row.original;
+  const icon = permit.icon();
+  return <div className="text-center"><i className={`ion ion-${icon}`} /></div>;
+};
+
 const formatDateCell = ({ value }) => {
   if (value instanceof Date) {
     const year = value.getFullYear();
@@ -45,6 +51,15 @@ class PermitList extends Component {
       <ReactTable
         data={geocodedPermits}
         columns={[
+          {
+            Header: '',
+            accessor: d => d,
+            id: 'icon',
+            headerClassName: 'text-bold',
+            Cell: renderIcon,
+            width: 30,
+            sortable: false
+          },
           {
             Header: 'Address',
             accessor: 'address',
