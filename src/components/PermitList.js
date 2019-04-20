@@ -58,6 +58,7 @@ class PermitList extends Component {
           {
             Header: 'Type',
             accessor: 'type',
+            minWidth: 130,
             Cell: centerText
           },
           {
