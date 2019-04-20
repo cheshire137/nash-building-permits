@@ -56,6 +56,8 @@ class App extends Component {
 
   onZipCodeChange = zipCode => {
     LocalStorage.set(zipCodeKey, zipCode);
+    LocalStorage.set(typeKey, 'all');
+    LocalStorage.set(yearKey, 'all');
     this.setState(prevState => ({
       zipCode,
       type: 'all',
@@ -69,6 +71,7 @@ class App extends Component {
 
   onTypeChange = type => {
     LocalStorage.set(typeKey, type);
+    LocalStorage.set(yearKey, 'all');
     this.setState(prevState => ({
       type,
       year: 'all',
