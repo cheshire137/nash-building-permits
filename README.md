@@ -1,5 +1,9 @@
 # Nash Building Permits
 
+Web app with an interactive map of the latest building permits issued in Nashville, Tennessee.
+
+![Screenshot](./screenshot.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## How to develop
