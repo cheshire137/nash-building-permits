@@ -2,6 +2,7 @@
   "name": "nash-building-permits",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://www.3till7.net/nash-building-permits",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "leaflet": "^1.4.0",
@@ -16,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
