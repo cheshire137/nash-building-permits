@@ -96,7 +96,7 @@ class App extends Component {
     return (
       <div>
         <header className="site-header">
-          <div className="container py-3 d-flex flex-items-center flex-justify-between">
+          <div className="container-lg py-3 d-flex flex-items-center flex-justify-between">
             <h1
               className="f3 text-normal"
             >Nashville Building Permits</h1>
@@ -114,7 +114,7 @@ class App extends Component {
           </div>
         </header>
         <main className="site-main">
-          <div className="container">
+          <div className="container-lg">
             {isLoading ? (
               <div className="blankslate">
                 <h2>Loading...</h2>
@@ -126,6 +126,24 @@ class App extends Component {
             )}
           </div>
         </main>
+        <footer className="site-footer">
+          <div className="container-lg py-3 d-flex flex-items-center flex-justify-between">
+            <a
+              target="_blank"
+              className="link-gray"
+              rel="noopener noreferrer"
+              href="https://github.com/cheshire137/nash-building-permits"
+            >View source</a>
+            <span>
+              Data from <a
+                target="_blank"
+                className="link-gray"
+                rel="noopener noreferrer"
+                href="https://data.nashville.gov/Licenses-Permits/Building-Permits-Issued/3h5w-q8b7"
+              >Nashville Building Permits Issued</a>
+            </span>
+          </div>
+        </footer>
       </div>
     );
   }
