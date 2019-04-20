@@ -7,7 +7,8 @@ const categoryIcons = {
   Repair: 'hammer',
   Demolition: 'trash-a',
   Tree: 'leaf',
-  Pool: 'waterdrop'
+  Pool: 'waterdrop',
+  Restaurant: 'pizza'
 };
 
 const categoryMarkerColors = {
@@ -60,37 +61,55 @@ class BuildingPermit {
     return this.position();
   }
 
+  typeContains(word) {
+    return this.type.toLowerCase().split(/\s+/).indexOf(word) > -1;
+  }
+
+  subtypeContains(word) {
+    return this.subtype.toLowerCase().split(/\s+/).indexOf(word) > -1;
+  }
+
   isRepair() {
-    const lowerType = this.type.toLowerCase();
-    return lowerType.indexOf('rehab') > -1 ||
-      lowerType.indexOf('addition') > -1 ||
-      lowerType.indexOf('roofing') > -1;
+    return this.typeContains('rehab') || this.typeContains('addition') ||
+      this.typeContains('roofing') || this.typeContains('fire') ||
+      this.typeContains('siding');
   }
 
   isDemolition() {
-    return this.type.toLowerCase().indexOf('demolition') > -1;
+    return this.typeContains('demolition');
   }
 
   isTree() {
-    return this.type.toLowerCase().indexOf('tree') > -1;
+    return this.typeContains('tree');
   }
 
   isPool() {
-    return this.subtype.toLowerCase().indexOf('pool') > -1;
+    return this.subtypeContains('pool') || this.subtypeContains('pools');
+  }
+
+  isRestaurant() {
+    return this.subtypeContains('restaurant');
+  }
+
+  isCar() {
+    return this.subtypeContains('carport') || this.subtypeContains('garage');
   }
 
   icon() {
-    if (this.isRepair()) {
-      return categoryIcons.Repair;
-    }
-    if (this.isDemolition()) {
-      return categoryIcons.Demolition;
+    if (this.isRestaurant()) {
+      return categoryIcons.Restaurant;
     }
     if (this.isTree()) {
       return categoryIcons.Tree;
     }
     if (this.isPool()) {
       return categoryIcons.Pool;
+    }
+    if (this.isRepair()) {
+      return categoryIcons.Repair;
+    }
+    if (this.isDemolition()) {
+      return categoryIcons.Demolition;
     }
     return categoryIcons[this.category()];
   }
