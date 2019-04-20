@@ -1,6 +1,5 @@
 #permit-map {
-  min-height: 350px;
-  height: 100%;
+  height: calc(80vh - 132px);
 }
 
 .popup-long-description {

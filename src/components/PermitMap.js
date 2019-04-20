@@ -15,10 +15,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-const hasCoordinates = function(permit) {
-  return permit.position();
-};
-
 const getBoundsAndZoom = function(buildingPermits) {
   const geocodes = buildingPermits.map(permit => permit.position());
   const defaultZoom = 13;
@@ -78,7 +74,7 @@ const getCenterPosition = function(buildingPermits) {
 class PermitMap extends Component {
   render() {
     const { buildingPermits } = this.props;
-    const geocodedPermits = buildingPermits.filter(hasCoordinates);
+    const geocodedPermits = buildingPermits.filter(permit => permit.hasCoordinates());
 
     if (geocodedPermits.length < 1) {
       return (
@@ -93,7 +89,7 @@ class PermitMap extends Component {
       <Map
         id="permit-map"
         center={center}
-        className="map__reactleaflet"
+        className="map__reactleaflet border"
         bounds={bounds}
         zoom={zoom}
       >

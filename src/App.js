@@ -3,6 +3,7 @@ import BuildingPermitsIssuedApi from './models/BuildingPermitsIssuedApi';
 import Config from './config.json';
 import FilterForm from './components/FilterForm';
 import PermitMap from './components/PermitMap';
+import PermitList from './components/PermitList';
 import LocalStorage from './models/LocalStorage';
 import './App.css';
 
@@ -120,9 +121,14 @@ class App extends Component {
                 <h2>Loading...</h2>
               </div>
             ) : (
-              <PermitMap
-                buildingPermits={filteredBuildingPermits}
-              />
+              <div>
+                <PermitMap
+                  buildingPermits={filteredBuildingPermits}
+                />
+                <PermitList
+                  buildingPermits={filteredBuildingPermits}
+                />
+              </div>
             )}
           </div>
         </main>

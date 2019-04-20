@@ -52,6 +52,10 @@ class BuildingPermit {
     }
   }
 
+  hasCoordinates() {
+    return this.position();
+  }
+
   icon() {
     return categoryIcons[this.category()];
   }
