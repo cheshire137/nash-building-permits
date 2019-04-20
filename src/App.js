@@ -133,7 +133,7 @@ class App extends Component {
           </div>
         </main>
         <footer className="site-footer">
-          <div className="container-lg py-3 d-flex flex-items-center flex-justify-between">
+          <div className="container-lg py-1 d-flex flex-items-center flex-justify-between">
             <a
               target="_blank"
               className="link-gray"

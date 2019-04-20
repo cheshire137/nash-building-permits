@@ -1,5 +1,19 @@
 import React, { Component } from 'react';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 import './PermitList.css';
+
+const formatLongText = ({ value }) => {
+  return (
+    <div
+      className="ws-normal constrained-text"
+    >{value}</div>
+  );
+};
+
+const centerText = ({ value }) => {
+  return <div className="text-center">{value}</div>
+};
 
 class PermitList extends Component {
   render() {
@@ -11,50 +25,39 @@ class PermitList extends Component {
     }
 
     return (
-      <div className="permit-list pt-2">
-        <table className="width-full text-center">
-          <thead>
-            <tr>
-              <th
-                className="pb-2"
-              >Address</th>
-              <th
-                className="pb-2 no-wrap"
-              >Zip code</th>
-              <th
-                className="pb-2"
-              >Type</th>
-              <th
-                className="pb-2 no-wrap"
-              >Sub-type</th>
-              <th
-                className="pb-2 no-wrap"
-              >Council district</th>
-            </tr>
-          </thead>
-          <tbody>
-            {geocodedPermits.map(permit => (
-              <tr key={permit.key()}>
-                <td
-                  className="border-top"
-                >{permit.address}</td>
-                <td
-                  className="border-top"
-                >{permit.zipCode}</td>
-                <td
-                  className="border-top no-wrap"
-                >{permit.type}</td>
-                <td
-                  className="border-top"
-                >{permit.subtype}</td>
-                <td
-                  className="border-top"
-                >{permit.councilDistrict}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ReactTable
+        data={geocodedPermits}
+        columns={[
+          {
+            Header: 'Address',
+            accessor: 'address',
+            minWidth: 130
+          },
+          {
+            Header: 'Zip code',
+            accessor: 'zipCode',
+            Cell: centerText
+          },
+          {
+            Header: 'Type',
+            accessor: 'type',
+            Cell: centerText
+          },
+          {
+            Header: 'Sub-type',
+            accessor: 'subtype',
+            Cell: formatLongText,
+            minWidth: 170
+          },
+          {
+            Header: 'Council district',
+            accessor: 'councilDistrict',
+            Cell: centerText
+          }
+        ]}
+        defaultPageSize={3}
+        className="-striped -highlight permit-list"
+      />
     );
   }
 }

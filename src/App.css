@@ -1,10 +1,13 @@
-.site-header,
-.site-footer {
-  height: 66px;
+.site-header {
+  height: 50px;
+}
+
+.site-footeer {
+  height: 29px;
 }
 
 .site-main {
-  height: calc(100vh - 132px);
+  height: calc(100vh - 79px);
 }
 
 .site-main > .container-lg {
