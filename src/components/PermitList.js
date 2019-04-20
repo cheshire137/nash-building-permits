@@ -48,32 +48,38 @@ class PermitList extends Component {
           {
             Header: 'Address',
             accessor: 'address',
+            headerClassName: 'text-bold',
             minWidth: 130
           },
           {
             Header: 'Zip code',
             accessor: 'zipCode',
+            headerClassName: 'text-bold',
             Cell: centerText
           },
           {
             Header: 'Type',
             accessor: 'type',
             minWidth: 130,
+            headerClassName: 'text-bold',
             Cell: centerText
           },
           {
             Header: 'Sub-type',
             accessor: 'subtype',
+            headerClassName: 'text-bold',
             Cell: formatLongText,
             minWidth: 170
           },
           {
             Header: 'Council district',
+            headerClassName: 'text-bold',
             accessor: 'councilDistrict',
             Cell: centerText
           },
           {
             Header: 'Date issued',
+            headerClassName: 'text-bold',
             accessor: 'dateIssued',
             minWidth: 80,
             Cell: formatDateCell
