@@ -3,7 +3,11 @@ import Util from './Util';
 const categoryIcons = {
   Commercial: 'briefcase',
   Residential: 'home',
-  Other: 'more'
+  Other: 'more',
+  Repair: 'hammer',
+  Demolition: 'trash-a',
+  Tree: 'leaf',
+  Pool: 'waterdrop'
 };
 
 const categoryMarkerColors = {
@@ -56,7 +60,38 @@ class BuildingPermit {
     return this.position();
   }
 
+  isRepair() {
+    const lowerType = this.type.toLowerCase();
+    return lowerType.indexOf('rehab') > -1 ||
+      lowerType.indexOf('addition') > -1 ||
+      lowerType.indexOf('roofing') > -1;
+  }
+
+  isDemolition() {
+    return this.type.toLowerCase().indexOf('demolition') > -1;
+  }
+
+  isTree() {
+    return this.type.toLowerCase().indexOf('tree') > -1;
+  }
+
+  isPool() {
+    return this.subtype.toLowerCase().indexOf('pool') > -1;
+  }
+
   icon() {
+    if (this.isRepair()) {
+      return categoryIcons.Repair;
+    }
+    if (this.isDemolition()) {
+      return categoryIcons.Demolition;
+    }
+    if (this.isTree()) {
+      return categoryIcons.Tree;
+    }
+    if (this.isPool()) {
+      return categoryIcons.Pool;
+    }
     return categoryIcons[this.category()];
   }
 
